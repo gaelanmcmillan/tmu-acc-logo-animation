@@ -48,10 +48,10 @@ function parallelogram (sideLength, x0=0, y0=0, doDrawCenter=false) {
   
   var parallelogramParams = [
     /* x-coord                  y-coord                    rotation     color    */
-    [  firstX,                  firstY,                    30,          RED      ],
-    [  firstX+triWidth,         firstY+triHeight,         -30,          YELLOW   ],
-    [  firstX+triWidth*3,       firstY+triHeight,          90,          GREEN    ],
-    [  firstX+triWidth*2,       firstY+triHeight*2,        30,          RED      ],
+    [  firstX,                  firstY,                    30,          RED      ], // rotation = 150 - 120
+    [  firstX+triWidth,         firstY+triHeight,         -30,          YELLOW   ], // 150 - 180
+    [  firstX+triWidth*3,       firstY+triHeight,          90,          GREEN    ], // 150 - 240
+    [  firstX+triWidth*2,       firstY+triHeight*2,        30,          RED      ], // 150 - 90
     [  firstX+triWidth*3,       firstY+triHeight*3,       -30,          YELLOW   ],
     [  firstX+triWidth,         firstY+triHeight*3,        90,          GREEN    ],
     [  firstX,                  firstY+triHeight*4,        30,          RED      ],
