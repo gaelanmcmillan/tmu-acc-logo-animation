@@ -6,4 +6,4 @@ Play with the code in-browser using the p5.js Web Editor!
 <br>
 Next step is to generate this animation with SVGs!
 
-![alt text](https://github.com/gaelanmcmillan/tmu-acc-logo-animation/blob/main/media/animation-steps.jpg?raw=true)
+![alt text](https://github.com/gaelanmcmillan/tmu-acc-logo-animation/blob/main/media/animation-steps.jpg)
