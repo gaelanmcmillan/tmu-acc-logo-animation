@@ -42,22 +42,21 @@ const TIME_PER_STEP = 1 / ANIMATION_STEP_COUNT;
 // │ APPEARANCE │
 // └────────────┘
 
-
 const MOVING_PARALLELOGRAM_COLOURS = [/* fill */ 0, /* edges */ 255];
-const COLOURS = [
-  [240,20,40], /* red */
-  [240,220,100], /* yellow */
-  [120,220,120], /* green */
-]
 
 const RED = [240,20,40];
 const YELLOW = [240,220,100];
 const GREEN = [120,220,120];
 
-const ANIMATION_STEP_COLOURS = [
-  [0,0,0],
-  [255,0,0],
+const STATIC_PARALLELOGRAM_COLOURS = [
+  RED,
+  YELLOW,
+  GREEN,
 ]
+
+// ┌────┐
+// │ UI │
+// └────┘
 
 var animationProgressSlider;
 
@@ -174,7 +173,6 @@ function drawParallelogram(points, fillColour=null, edgeColour=null) {
   let [left, right] = parallelogramPointsToTriangles(points);
 
   pushPop(() => {
-
     if (fillColour !== null) {
       stroke(fillColour);
       fill(fillColour);
@@ -194,7 +192,6 @@ function drawParallelogram(points, fillColour=null, edgeColour=null) {
     line(...right.slice(0,2), ...right.slice(4,6));
   });
 }
-
 
 function makeParametrizedAnimationSteps(pointSets) {
   let steps = [];
@@ -221,7 +218,6 @@ const ANIMATION_STEPS = [(_) => POINT_SETS[0]]
                         .concat([(_) => POINT_SETS[PARALLELOGRAM_COUNT-1]]);
 
 
-
 function draw() {
   background(0);
   pushPop(() => {
@@ -236,7 +232,7 @@ function draw() {
 
   for (let [stepNumber, animationStepFunction] of ANIMATION_STEPS.entries()) {
     let [min, max] = [stepNumber * TIME_PER_STEP, (stepNumber+1) * TIME_PER_STEP]; 
-    let revealedCol = COLOURS[Math.max(0, (stepNumber-1) % COLOURS.length)];
+    let revealedCol = STATIC_PARALLELOGRAM_COLOURS[Math.max(0, (stepNumber-1) % STATIC_PARALLELOGRAM_COLOURS.length)];
 
     // We start drawing visited parallelograms 
     // after the first animation step (the initial fade-in)
@@ -251,7 +247,7 @@ function draw() {
     
     // Generate the geometry of the moving parallelogram based on current progress.
     let movingPoints = animationStepFunction(currentStepProgress);
-  
+    
     let movingParallelogramColour = (/* immediately invoked function expression */ () => {
       if (animationProgress < TIME_PER_STEP) 
         // Fade from black to colour on first step.
