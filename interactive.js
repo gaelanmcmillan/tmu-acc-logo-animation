@@ -46,7 +46,7 @@ const MOVING_PARALLELOGRAM_COLOURS = [/* fill */ 0, /* edges */ 255];
 
 const RED = [240,20,40];
 const YELLOW = [240,220,100];
-const GREEN = [120,220,120];
+const GREEN = [120,220,120]; // #78dc78
 
 const STATIC_PARALLELOGRAM_COLOURS = [
   RED,
@@ -59,7 +59,7 @@ const STATIC_PARALLELOGRAM_COLOURS = [
 // └────┘
 
 var animationProgressSlider;
-var progressTypeButton;
+var autoplayCheckBox;
 
 function setup() {
   createCanvas(CANVAS_WIDTH, CANVAS_HEIGHT);
@@ -67,25 +67,14 @@ function setup() {
   frameRate(60);
 
   animationProgressSlider = createSlider(0,1,0,0.001);
-  animationProgressSlider.style('width', "400px");
+  animationProgressSlider.addClass('mobileSlider');
   animationProgressSlider.attribute('disabled','');
 
-  progressTypeButton = createCheckbox('auto-play animation', true);
+  autoplayCheckBox = createCheckbox('auto-play animation', true);
+  autoplayCheckBox.addClass('checkLabel');
 
-  let box = progressTypeButton.elt.getElementsByTagName('input')[0];
-  let label = progressTypeButton.elt.getElementsByTagName('label')[0];
-  box.style.width = '50px';
-  box.style.height = '50px';
-  box.style['background-color:active'] = 'green';
-
-  label.style.display = "flex";
-  label.style['align-items'] = 'center';
-
-  progressTypeButton.style('color', 'white');
-  progressTypeButton.style('font-family', 'courier new');
-
-  progressTypeButton.changed(() => {
-    if (progressTypeButton.checked()) {
+  autoplayCheckBox.changed(() => {
+    if (autoplayCheckBox.checked()) {
       animationProgressSlider.attribute('disabled', '');
     } else {
       animationProgressSlider.removeAttribute('disabled');
@@ -105,7 +94,7 @@ function rotatePoint(x0,y0,xP,yP,rot) {
 /*
 Calculates the following parallelogram points:
 
-             Top
+              Top
                .
            -       -
   Left .    (x0,y0)    . Right
@@ -244,7 +233,7 @@ const ANIMATION_STEPS = [(_) => POINT_SETS[0]]
 function draw() {
   background(0);
 
-  if (progressTypeButton.checked()) {
+  if (autoplayCheckBox.checked()) {
     let sliderPos = Math.sin(millis() * 0.001)/2 + 0.5;
     animationProgressSlider.value(sliderPos);
   }

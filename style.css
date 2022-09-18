@@ -1,0 +1,63 @@
+.mobileSlider {
+    width: 400px;
+    background-color: transparent;
+    -webkit-appearance: none;
+}
+
+.mobileSlider:focus {
+    background: none;
+}
+
+.mobileSlider::-webkit-slider-runnable-track {
+    background: white;
+    height: 3px;
+    -webkit-appearance: none;
+    margin-top: -20px;
+    margin-bottom: 40px;
+
+    /* Turns the cursor into the hand pointer icon when hovering over the slider  */
+    cursor: pointer;
+}
+
+.mobileSlider::-webkit-slider-thumb {
+    width: 40px;
+    height: 70px;
+    background: #78dc78;
+    cursor: pointer;
+    -webkit-appearance: none;
+
+    margin-top: -35px
+}
+
+.mobileSlider:disabled:-webkit-slider-runnable-track {
+    background: rgb(123, 123, 123);
+}
+
+.mobileSlider:disabled::-webkit-slider-thumb {
+    background: #7e7e7e;
+    cursor: default;
+}
+
+.checkLabel {
+    user-select: none;
+}
+
+.checkLabel label {
+    color:white;
+    font-family: 'Courier New', Courier, monospace;
+    display: flex;
+    align-items: center;
+}
+
+.checkLabel span {
+    padding-left: 20px;
+}
+
+.checkLabel input {
+    width: 50px;
+    height: 50px;
+}
+
+.checkLabel input[type="checkbox"] {
+    accent-color: #78dc78;
+}
