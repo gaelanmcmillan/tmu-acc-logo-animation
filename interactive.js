@@ -59,6 +59,7 @@ const STATIC_PARALLELOGRAM_COLOURS = [
 // └────┘
 
 var animationProgressSlider;
+var progressTypeButton;
 
 function setup() {
   createCanvas(CANVAS_WIDTH, CANVAS_HEIGHT);
@@ -67,6 +68,29 @@ function setup() {
 
   animationProgressSlider = createSlider(0,1,0,0.001);
   animationProgressSlider.style('width', "400px");
+  animationProgressSlider.attribute('disabled','');
+
+  progressTypeButton = createCheckbox('auto-play animation', true);
+
+  let box = progressTypeButton.elt.getElementsByTagName('input')[0];
+  let label = progressTypeButton.elt.getElementsByTagName('label')[0];
+  box.style.width = '50px';
+  box.style.height = '50px';
+  box.style['background-color:active'] = 'green';
+
+  label.style.display = "flex";
+  label.style['align-items'] = 'center';
+
+  progressTypeButton.style('color', 'white');
+  progressTypeButton.style('font-family', 'courier new');
+
+  progressTypeButton.changed(() => {
+    if (progressTypeButton.checked()) {
+      animationProgressSlider.attribute('disabled', '');
+    } else {
+      animationProgressSlider.removeAttribute('disabled');
+    }
+  });
 }
 
 function rotatePoint(x0,y0,xP,yP,rot) {
@@ -81,14 +105,13 @@ function rotatePoint(x0,y0,xP,yP,rot) {
 /*
 Calculates the following parallelogram points:
 
-            Top
-            .o.
-         .*^   ^*.
-  Left o. (x0,y0) .o Right
-         ^*.   .*^ 
-            ^o^
-           Bottom
-           
+             Top
+               .
+           -       -
+  Left .    (x0,y0)    . Right
+           -       - 
+               .
+             Bottom
 */
 function calculateParallelogramPoints(rot=0, x0=0, y0=0, sideLength=SIDE_LENGTH) {
   let points = [
@@ -220,11 +243,11 @@ const ANIMATION_STEPS = [(_) => POINT_SETS[0]]
 
 function draw() {
   background(0);
-  pushPop(() => {
-    noStroke();
-    fill(100);
-    text(`Animation Progress: ${animationProgressSlider.value()}`, 10, 380);
-  });
+
+  if (progressTypeButton.checked()) {
+    let sliderPos = Math.sin(millis() * 0.001)/2 + 0.5;
+    animationProgressSlider.value(sliderPos);
+  }
   
   let animationProgress = animationProgressSlider.value();
   
