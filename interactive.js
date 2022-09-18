@@ -38,6 +38,9 @@ const PARALLELOGRAM_COUNT = 12;
 const ANIMATION_STEP_COUNT = 13;
 const TIME_PER_STEP = 1 / ANIMATION_STEP_COUNT;
 
+const autoplaySpeedLabels = ['slow', 'medium', 'fast'];
+const autoplaySpeeds = [0.0001, 0.00075, 0.002];
+var autoplayIndex = 1;
 // ┌────────────┐
 // │ APPEARANCE │
 // └────────────┘
@@ -59,19 +62,30 @@ const STATIC_PARALLELOGRAM_COLOURS = [
 // └────┘
 
 var animationProgressSlider;
+var autoplayContainer;
 var autoplayCheckBox;
+var speedSelector;
 
 function setup() {
   createCanvas(CANVAS_WIDTH, CANVAS_HEIGHT);
   angleMode(DEGREES);
   frameRate(60);
 
+
   animationProgressSlider = createSlider(0,1,0,0.001);
   animationProgressSlider.addClass('mobileSlider');
   animationProgressSlider.attribute('disabled','');
 
+  autoplayContainer = createDiv();
+  autoplayContainer.addClass('autoplayContainer');
   autoplayCheckBox = createCheckbox('auto-play animation', true);
   autoplayCheckBox.addClass('checkLabel');
+  autoplayCheckBox.parent(autoplayContainer);
+
+  speedSelector = createButton(autoplaySpeedLabels[autoplayIndex]);
+  speedSelector.addClass('speedSelector');
+  speedSelector.parent(autoplayContainer);
+
 
   autoplayCheckBox.changed(() => {
     if (autoplayCheckBox.checked()) {
@@ -80,6 +94,11 @@ function setup() {
       animationProgressSlider.removeAttribute('disabled');
     }
   });
+
+  speedSelector.mousePressed(() => {
+    autoplayIndex = (autoplayIndex + 1) % autoplaySpeedLabels.length;
+    speedSelector.html(autoplaySpeedLabels[autoplayIndex]);
+  })
 }
 
 function rotatePoint(x0,y0,xP,yP,rot) {
@@ -234,13 +253,13 @@ function draw() {
   background(0);
 
   if (autoplayCheckBox.checked()) {
-    let sliderPos = Math.sin(millis() * 0.001)/2 + 0.5;
+    let sliderPos = Math.sin(millis() * autoplaySpeeds[autoplayIndex])/2 + 0.5;
     animationProgressSlider.value(sliderPos);
   }
   
   let animationProgress = animationProgressSlider.value();
   
-  translate(200, 100);
+  translate(...FIRST_PARALLELOGRAM_POSITION);
 
   for (let [stepNumber, animationStepFunction] of ANIMATION_STEPS.entries()) {
     let [min, max] = [stepNumber * TIME_PER_STEP, (stepNumber+1) * TIME_PER_STEP]; 

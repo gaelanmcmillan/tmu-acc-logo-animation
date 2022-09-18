@@ -38,6 +38,11 @@
     cursor: default;
 }
 
+.autoplayContainer {
+    display: flex;
+    align-items: center;
+}
+
 .checkLabel {
     user-select: none;
 }
@@ -51,6 +56,7 @@
 
 .checkLabel span {
     padding-left: 20px;
+    padding-right: 20px;
 }
 
 .checkLabel input {
@@ -60,4 +66,11 @@
 
 .checkLabel input[type="checkbox"] {
     accent-color: #78dc78;
+}
+
+.speedSelector {
+    width: 120px;
+    height: 50px;
+    color: black;
+    font-family: 'Courier New', Courier, monospace;
 }
